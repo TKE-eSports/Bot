@@ -1,0 +1,28 @@
+# Ignore a blackhole and the folder for development
+node_modules/
+.vs/
+.idea/
+*.iml
+
+# Environment variables
+.DS_Store
+
+dist/
+package-lock.json
+
+# Ignore the config file (contains sensitive information such as tokens)
+src/config.ts
+
+# Ignore heapsnapshot and log files
+*.heapsnapshot
+*.log
+
+# Ignore yarn lock file
+yarn.lock
+
+# Environment variables
+src/.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
