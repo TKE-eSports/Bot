@@ -8,6 +8,7 @@ import SpotifyPlugin from '@distube/spotify';
 import SoundCloudPlugin from '@distube/soundcloud';
 import { Music } from '../config';
 import { connectDatabase } from '../lib/database/database';
+import { updateOverViewEmbed } from '../lib/clubOverview/updateOverviewEmbed';
 
 const dev = process.env.NODE_ENV !== 'production';
 
@@ -26,6 +27,7 @@ export class UserEvent extends Listener {
 		this.printStoreDebugInformation();
 
 		this.loadMusic();
+		updateOverViewEmbed();
 		this.loadDatabase();
 
 		// Unloads and loads the listeners again
