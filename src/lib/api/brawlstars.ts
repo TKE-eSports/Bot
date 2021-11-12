@@ -1,13 +1,19 @@
 import { fetch, FetchResultTypes } from "@sapphire/fetch";
+import type { ChartConfiguration } from "chart.js";
+import { ChartJSNodeCanvas } from "chartjs-node-canvas";
+const chartJSNodeCanvas = new ChartJSNodeCanvas({ width: 500, height: 300, backgroundColour: '#1E1E1E' });
+chartJSNodeCanvas.registerFont("./src/static/fonts/sans_serif.ttf" , {family: "Custom_Font"})
 
-const BASE_URL = "https://bsproxy.royaleapi.dev/v1";
+const BRAWL_STARS_API_URL = "https://bsproxy.royaleapi.dev/v1";
+const BRAWLAPI_API_URL = "https://api.brawlapi.com/v1";
+const BRAWLAPI_API = "y3@b$#MgW7!#L4@yX#&3*K#$qCYWu7HU6TL6f4jrLx9Y*PRRuw8^vU4k8HynZ%jN2VJRScD$px9gj85L8Y8JkvXe*Uy3Lh5NpKj&jtfz$LoiNp^H3C97v@Q!R7NJ*iHRRPBkxGZHhec@9eb53@TWpT^bAH^4r&VxNwvp4y!3@@x7Y@fKgbTTV7!Y6@G9fr5NENZbuE84#Wgpy254ZB!mX*83KuX#b!5BMh2F!G9#5Z*p2psC9PpDT5&E4^4J5Juw";
 
 export const encodeTag = (tag: string) => {
     return tag.startsWith("#") ? encodeURIComponent(tag) : `${encodeURIComponent("#" + tag)}`;
 }
 
 export const getClub = async (tag: string) => {
-    const response = await fetch<Club>(`${BASE_URL}/clubs/${encodeTag(tag)}`, {
+    const response = await fetch<Club>(`${BRAWL_STARS_API_URL}/clubs/${encodeTag(tag)}`, {
         headers: {
             "Authorization": `Bearer ${process.env.BRAWL_STARS_API}`
         }
@@ -16,12 +22,72 @@ export const getClub = async (tag: string) => {
 }
 
 export const getPlayer = async (tag: string) => {
-    const response = await fetch(`${BASE_URL}/players/${encodeTag(tag)}`, {
+    const response = await fetch(`${BRAWL_STARS_API_URL}/players/${encodeTag(tag)}`, {
         headers: {
             "Authorization": `Bearer ${process.env.BRAWL_STARS_API}`
         }
     }, FetchResultTypes.JSON);
     return response;
+}
+
+export const generateClubGraph = async (tag: string) => {
+    const response = await fetch<GraphResponse>(`${BRAWLAPI_API_URL}/graphs/club/${tag.replace("#", "")}`, {
+        headers: {
+            "Authorization": BRAWLAPI_API
+        }
+    }, FetchResultTypes.JSON);
+
+    const chartConfig: ChartConfiguration = {
+        type: 'line',
+        data: {
+            datasets: [{
+                data: response.data,
+                borderColor: '#FFFF',
+            }],
+            labels: response.labels
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: false
+                }
+            }
+        }
+    }
+    return chartJSNodeCanvas.renderToBuffer(chartConfig, "image/png")
+}
+
+export const generatePlayerGraph = async (tag: string) => {
+    const response = await fetch<GraphResponse>(`${BRAWLAPI_API_URL}/graphs/player/${tag.replace("#", "")}`, {
+        headers: {
+            "Authorization": BRAWLAPI_API
+        }
+    }, FetchResultTypes.JSON);
+
+    const chartConfig: ChartConfiguration = {
+        type: 'line',
+        data: {
+            datasets: [{
+                data: response.data,
+                borderColor: '#FFFF',
+            }],
+            labels: response.labels
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: false
+                }
+            }
+        }
+    }
+    return chartJSNodeCanvas.renderToBuffer(chartConfig, "image/png")
 }
 
 interface Club {
@@ -39,4 +105,11 @@ interface Club {
         expLevel: number,
         trophies: number
     }[]
+}
+
+interface GraphResponse {
+    number: { daily: number, weekly: number, seasonal: number },
+    labels: string[],
+    data: number[],
+    tag: string
 }
