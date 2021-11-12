@@ -1,6 +1,6 @@
 import { MessageActionRow, MessageEmbed, MessageOptions, MessageSelectMenu } from "discord.js";
-import { ClubOverview } from "../../config";
-import { getClub } from "../api/brawlstars";
+import { ClubOverview } from "../../../config";
+import { getClub } from "../../api/brawlstars";
 import { entranceEmoji , separate , splitChunk } from "./modules";
 
 export const buildOverviewEmbed = async () => {

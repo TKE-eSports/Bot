@@ -1,7 +1,7 @@
 import { container } from "@sapphire/framework";
 import { InteractionCollector, MessageEmbed, TextChannel } from "discord.js";
-import { CdnBaseUrl, ClubOverview, WebServer } from "../../config";
-import { getClub } from "../api/brawlstars";
+import { CdnBaseUrl, ClubOverview, WebServer } from "../../../config";
+import { getClub } from "../../api/brawlstars";
 import { buildOverviewEmbed } from "./buildOverviewEmbed";
 import { separate, list, entranceEmoji } from "./modules";
 
@@ -40,7 +40,7 @@ const _collector = async (channel: TextChannel) => {
             .addField(`Top Seniors (${list(club, "senior")[0]})`, list(club, "senior")[1], true)
             .addField(`Top Presidents (${list(club, "vicePresident")[0]} + 1)`, list(club, "vicePresident")[1], true)
             .setFooter("Graph Data Provided by BrawlAPI" , `${CdnBaseUrl}/logos/brawlify.png`)
-            .setImage(`${WebServer.host}/brawlstars/graph/club/${club.tag}`)
+            .setImage(`${WebServer.host}/brawlstars/graph/club/${club.tag.replace("#" , "")}?timestamps=${Date.now()}`)
             .setTimestamp();
         interaction.reply({ embeds: [embed], ephemeral: true });
     });
