@@ -12,10 +12,9 @@ export class UserEvent extends Listener {
     public async run(message: Message, response: string[]) {
         const embed = new MessageEmbed(AntiPhish.ads)
             .setAuthor(`${message.author.tag} (${message.author.id})`, message.author.displayAvatarURL())
-            .setTitle(`Phishing Domain Found`)
-            .setDescription(`${response.map((value) => `● ${value}`).join("\n")}`)
-            .setImage(`https://urlscan.io/liveshot/?width=1600&height=1200&url=http://${response[0]}`)
-            .setColor("NOT_QUITE_BLACK");
+            .addField("Phishing Domain Found", `${response.map((value) => `● ${value}`).join("\n")}`)
+            .setThumbnail(`https://urlscan.io/liveshot/?width=1600&height=1200&url=http://${response[0]}`)
+            .setColor("RED");
 
         const transcript = await createAndSaveTranscript(new Collection<string, Message>().set(message.id, message));
         const actionRow = new MessageActionRow().addComponents(
