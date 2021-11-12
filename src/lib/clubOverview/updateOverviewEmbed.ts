@@ -39,7 +39,7 @@ const _collector = async (channel: TextChannel) => {
             .addField(`Top Members (${list(club, "member")[0]})`, list(club, "member")[1], true)
             .addField(`Top Seniors (${list(club, "senior")[0]})`, list(club, "senior")[1], true)
             .addField(`Top Presidents (${list(club, "vicePresident")[0]} + 1)`, list(club, "vicePresident")[1], true)
-            .setFooter("Graph Data Provided by BrawlAPI" , `${CdnBaseUrl}/logos/brawlapi.png`)
+            .setFooter("Graph Data Provided by BrawlAPI" , `${CdnBaseUrl}/logos/brawlify.png`)
             .setImage(`${WebServer.host}/brawlstars/graph/club/${club.tag}`)
             .setTimestamp();
         interaction.reply({ embeds: [embed], ephemeral: true });
