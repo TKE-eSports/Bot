@@ -15,12 +15,12 @@ export class UserEvent extends Listener {
     public async run(message: Message) {
         if (message.author.bot || !message.member || message.system || message.content === '' || !message.channel.isText() || message.guildId !== AntiPhish.guildId) return;
         else if (this.comparePerms(message.member)) return;
-        await message.react(AntiPhish.searchingEmoji).catch();
         const extractDomains = this.extractDomains(message.content);
         const detectedPhishingDomains = extractDomains.filter((domain) => phishingDomains.has(domain));
 
-        if (detectedPhishingDomains.length > 0) this.container.client.emit(Events.Phishing.PhishingDetect, message, detectedPhishingDomains);
-        else message.reactions.removeAll().catch();
+        if (detectedPhishingDomains.length > 0) {
+            this.container.client.emit(Events.Phishing.PhishingDetect, message, detectedPhishingDomains);
+        }
     }
 
     private comparePerms(member: GuildMember) {

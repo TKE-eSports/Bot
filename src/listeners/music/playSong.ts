@@ -1,7 +1,7 @@
 import { Listener, ListenerOptions, container } from '@sapphire/framework';
 import { ApplyOptions } from '@sapphire/decorators';
 import type { Queue, Song } from 'distube';
-import { editMessage } from '../../lib/music/modules';
+import { editMessage } from '../../lib/workers/music/modules';
 
 @ApplyOptions<ListenerOptions>({
 	emitter: container.music

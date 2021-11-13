@@ -26,7 +26,7 @@ const _collector = async (channel: TextChannel) => {
         const club = await getClub(interaction.values[0]);
 
         const president = club.members.find(m => m.role === "president");
-        const embed = new MessageEmbed()
+        const infoEmbed = new MessageEmbed()
             .setThumbnail(`https://cdn.brawlify.com/club/${club.badgeId}.png?v=1`)
             .setAuthor(`${club.name} (${club.tag})`, `https://cdn.brawlify.com/club/${club.badgeId}.png?v=1`, `https://brawlify.com/stats/club/${club.tag.replace("#", "")}`)
             .addField("Trophies", `<:Trophies:789421880036687883> ${separate(club.trophies)}`, true)
@@ -39,10 +39,13 @@ const _collector = async (channel: TextChannel) => {
             .addField(`Top Members (${list(club, "member")[0]})`, list(club, "member")[1], true)
             .addField(`Top Seniors (${list(club, "senior")[0]})`, list(club, "senior")[1], true)
             .addField(`Top Presidents (${list(club, "vicePresident")[0]} + 1)`, list(club, "vicePresident")[1], true)
-            .setFooter("Graph Data Provided by BrawlAPI" , `${CdnBaseUrl}/logos/brawlify.png`)
+    
+            const graphEmbed = new MessageEmbed()
             .setImage(`${WebServer.host}/brawlstars/graph/club/${club.tag.replace("#" , "")}?timestamps=${Date.now()}`)
+            .setFooter("Graph Data Provided by BrawlAPI" , `${CdnBaseUrl}/logos/brawlify.png`)
             .setTimestamp();
-        interaction.reply({ embeds: [embed], ephemeral: true });
+            
+        interaction.reply({ embeds: [infoEmbed , graphEmbed], ephemeral: true });
     });
 }
 

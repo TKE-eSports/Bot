@@ -1,7 +1,7 @@
 import { Listener } from '@sapphire/framework';
 import type { VoiceState } from 'discord.js';
 import { Music } from '../../config';
-import { editMessage } from '../../lib/music/modules';
+import { editMessage } from '../../lib/workers/music/modules';
 
 export class UserEvent extends Listener {
 	public run(oldState: VoiceState, newState: VoiceState) {

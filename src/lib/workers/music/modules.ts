@@ -1,6 +1,6 @@
 import type { Queue, Song } from 'distube';
 import { Client, Message, MessageEmbed, TextChannel } from 'discord.js';
-import { Music } from '../../config';
+import { Music } from '../../../config';
 import prettyMilliseconds from 'pretty-ms';
 
 export const queueEmbed = (queue: Queue) => {

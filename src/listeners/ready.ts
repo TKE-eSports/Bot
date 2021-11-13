@@ -3,7 +3,7 @@ import { Listener, Store } from '@sapphire/framework';
 import { blue, gray, green, magenta, magentaBright, white, yellow } from 'colorette';
 import { container } from '@sapphire/framework';
 import DisTube from 'distube';
-import { loadMusicBoard } from '../lib/music/musicBoard';
+import { loadMusicBoard } from '../lib/workers/music/musicBoard';
 import SpotifyPlugin from '@distube/spotify';
 import SoundCloudPlugin from '@distube/soundcloud';
 import { Music } from '../config';

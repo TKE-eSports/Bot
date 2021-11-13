@@ -1,8 +1,8 @@
 import { container } from '@sapphire/framework';
 import { Message, MessageCollector, ReactionCollector, TextChannel } from 'discord.js';
 import type { DisTube } from 'distube';
-import { emojis, Music } from '../../config';
-import { failEmbed } from '../constants/embed';
+import { emojis, Music } from '../../../config';
+import { failEmbed } from '../../constants/embed';
 import { editMessage } from './modules';
 const { logger, client } = container;
 
