@@ -98,5 +98,6 @@ export const loadMusicBoard = async (music: DisTube) => {
 			default:
 				break;
 		}
+		editMessage(client, queue , queue.songs[0]);
 	});
 };

@@ -13,6 +13,7 @@ loadPhishDomains();
 })
 export class UserEvent extends Listener {
     public async run(message: Message) {
+        if (!AntiPhish.enabled) return;
         if (message.author.bot || !message.member || message.system || message.content === '' || !message.channel.isText() || message.guildId !== AntiPhish.guildId) return;
         else if (this.comparePerms(message.member)) return;
         const extractDomains = this.extractDomains(message.content);

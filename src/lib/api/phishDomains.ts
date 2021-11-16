@@ -1,6 +1,7 @@
 import { fetch, FetchResultTypes } from "@sapphire/fetch";
 import { container } from "@sapphire/framework";
 import parseDomain from "extract-domain";
+import { AntiPhish } from "../../config";
 
 const BASE_URLs = [
     "https://raw.githubusercontent.com/mitchellkrogza/Phishing.Database/master/phishing-domains-ACTIVE.txt",
@@ -11,6 +12,7 @@ const BASE_URLs = [
 
 export const phishingDomains = new Set<string>();
 export const loadPhishDomains = () => {
+    if (!AntiPhish.enabled) return container.logger.debug(`AntiPhish is disabled.`);
     BASE_URLs.forEach((url) => {
         fetch(url, FetchResultTypes.Text)
             .then((data) => {
