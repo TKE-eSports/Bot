@@ -35,7 +35,7 @@ export const Events = {
 	Phishing: {
 		PhishingDetect: 'phishingDetect'
 	},
-	Logging: {
-		LogEvents: 'logEvents'
+	Nsfw: {
+		NsfwDetect: 'nsfwDetect'
 	}
 };
