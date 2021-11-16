@@ -33,8 +33,8 @@ export class UserEvent extends Listener {
         const REGEX = new RegExp(/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)?/gi);
         const matches = content.match(REGEX) ?? [];
         return matches.map((match) => {
-            if (match.startsWith("http")) return parseDomain(match);
-            return parseDomain(`http://${match}`);
+            if (match.startsWith("http")) return parseDomain(match, { "tld": true });
+            return parseDomain(`http://${match}`, { "tld": true });
         });
     }
 }
