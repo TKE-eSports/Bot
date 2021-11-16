@@ -1,6 +1,6 @@
 import { container } from "@sapphire/framework";
 import { InteractionCollector, MessageEmbed, TextChannel } from "discord.js";
-import { CdnBaseUrl, ClubOverview, WebServer } from "../../../config";
+import { CDN, ClubOverview, WebServer } from "../../../config";
 import { getClub } from "../../api/brawlstars";
 import { buildOverviewEmbed } from "./buildOverviewEmbed";
 import { separate, list, entranceEmoji } from "./modules";
@@ -42,7 +42,7 @@ const _collector = async (channel: TextChannel) => {
     
             const graphEmbed = new MessageEmbed()
             .setImage(`${WebServer.host}/brawlstars/graph/club/${club.tag.replace("#" , "")}?timestamps=${Date.now()}`)
-            .setFooter("Graph Data Provided by BrawlAPI" , `${CdnBaseUrl}/logos/brawlify.png`)
+            .setFooter("Graph Data Provided by BrawlAPI" , `${CDN.url}/logos/brawlify.png`)
             .setTimestamp();
             
         interaction.reply({ embeds: [infoEmbed , graphEmbed], ephemeral: true });
