@@ -1,3 +1,5 @@
+![TKE Bot Status](https://img.shields.io/uptimerobot/status/m789796219-912d24571eb3a4584e58346f?label=Status&style=flat-square)
+
 # TKE Bot
 
 This repository contains the source code of TKE Bot.
