@@ -5,7 +5,7 @@
   "author": "@TKE-eSports",
   "license": "UNLICENSE",
   "dependencies": {
-    "@discordjs/collection": "^0.2.1",
+    "@discordjs/collection": "^0.3.0",
     "@discordjs/opus": "^0.6.0",
     "@discordjs/voice": "^0.7.2",
     "@distube/soundcloud": "^1.0.0",
