@@ -1,8 +1,6 @@
 import { fetch, FetchResultTypes } from "@sapphire/fetch";
 import type { ChartConfiguration } from "chart.js";
-import { ChartJSNodeCanvas } from "chartjs-node-canvas";
-const chartJSNodeCanvas = new ChartJSNodeCanvas({ width: 500, height: 300, backgroundColour: '#1E1E1E' });
-chartJSNodeCanvas.registerFont("./src/static/fonts/sans_serif.ttf" , {family: "Custom_Font"})
+import { chart } from "./chart";
 
 const BRAWL_STARS_API_URL = "https://bsproxy.royaleapi.dev/v1";
 const BRAWLAPI_API_URL = "https://api.brawlapi.com/v1";
@@ -57,7 +55,7 @@ export const generateClubGraph = async (tag: string) => {
             }
         }
     }
-    return chartJSNodeCanvas.renderToBuffer(chartConfig, "image/png")
+    return await chart.renderToBuffer(chartConfig, "image/png")
 }
 
 export const generatePlayerGraph = async (tag: string) => {
@@ -87,7 +85,7 @@ export const generatePlayerGraph = async (tag: string) => {
             }
         }
     }
-    return chartJSNodeCanvas.renderToBuffer(chartConfig, "image/png")
+    return await chart.renderToBuffer(chartConfig, "image/png")
 }
 
 interface Club {
