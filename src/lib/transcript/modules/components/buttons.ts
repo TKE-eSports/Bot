@@ -1,4 +1,5 @@
 import type { Message } from 'discord.js';
+import { parse } from 'twemoji-parser';
 
 export const buttonComponent = (message: Message) => {
 	const messageActionRowComponent = message.components
@@ -11,11 +12,10 @@ export const buttonComponent = (message: Message) => {
 			const emoji = button.emoji
 				? button.emoji.id
 					? `https://cdn.discordapp.com/emojis/${button.emoji.id}.png`
-					: `https://abs.twimg.com/emoji/v2/svg/${button.emoji.name.codePointAt(0)?.toString().toLowerCase()}.svg`
+					: parse(button.emoji.name)[0].url
 				: null;
 			components.push(
-				`<discord-button type="${getButtonType(button.style)}" ${button.url ? `url="${button.url}"` : ''} ${
-					emoji ? `emoji="${emoji}"` : ''
+				`<discord-button type="${getButtonType(button.style)}" ${button.url ? `url="${button.url}"` : ''} ${emoji ? `emoji="${emoji}"` : ''
 				} ${button.emoji?.name ? `emoji-name="${button.emoji.name}"` : ''}> ${button.label} </discord-button>`
 			);
 		});

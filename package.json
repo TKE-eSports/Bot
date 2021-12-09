@@ -28,6 +28,7 @@
     "@types/extract-domain": "^2.3.1",
     "@types/html-minifier": "^4.0.1",
     "@types/marked": "^3.0.2",
+    "@types/twemoji-parser": "^13.1.1",
     "canvas": "^2.8.0",
     "chart.js": "^3.6.0",
     "chartjs-node-canvas": "^4.1.4",
@@ -44,7 +45,8 @@
     "nanoid": "^3.1.30",
     "pretty-ms": "^7.0.1",
     "reflect-metadata": "^0.1.13",
-    "tag-replacer": "^1.2.4"
+    "tag-replacer": "^1.2.4",
+    "twemoji-parser": "^13.1.0"
   },
   "devDependencies": {
     "@sapphire/prettier-config": "1.2.6",

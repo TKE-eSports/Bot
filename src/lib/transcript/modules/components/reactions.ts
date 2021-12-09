@@ -1,4 +1,5 @@
 import type { Message } from 'discord.js';
+import { parse } from "twemoji-parser";
 
 export const reactionComponent = (message: Message) => {
 	let reactionsArray: ReactionArray = [];
@@ -6,7 +7,7 @@ export const reactionComponent = (message: Message) => {
 		const emojiName = reaction.emoji.name as string;
 		reactionsArray.push({
 			name: reaction.emoji.name ?? reaction.emoji.id,
-			emoji: reaction.emoji.url ?? `https://abs.twimg.com/emoji/v2/svg/${emojiName.codePointAt(0)?.toString().toLowerCase()}.svg`,
+			emoji: reaction.emoji.url ?? parse(emojiName)[0].url,
 			count: reaction.count
 		});
 	});
