@@ -12,7 +12,7 @@ import { Events } from '../../../lib/constants/events';
 export class UserEvent extends Listener {
     public async run(message: Message) {
         if (!AntiNsfw.enabled) return;
-        if (message.author.bot || !message.member || message.system || message.content === '' || !message.channel.isText() || message.guildId !== AntiNsfw.guildId) return;
+        if (message.author.bot || !message.member || message.system || !message.channel.isText() || message.guildId !== AntiNsfw.guildId) return;
         else if (this.comparePerms(message.member)) return;
 
         const images = this.extractImages(message);
@@ -45,7 +45,7 @@ export class UserEvent extends Listener {
     private extractImages(message: Message) {
         const imageRegex = new RegExp(/\b(https?:\/\/\S+(?:png|jpe?g|gif)\S*)\b/igm);
         const contentMatches = message.content.match(imageRegex) ?? [];
-        const attachments = message.attachments.filter((attachment) => attachment.proxyURL.includes('png') || attachment.proxyURL.includes('jpg') || attachment.proxyURL.includes('jpeg') || attachment.proxyURL.includes('gif')).map((attachment) => attachment.proxyURL);
+        const attachments = message.attachments.filter((attachment) => attachment.height !== null && attachment.width !== null).map((attachment) => attachment.proxyURL);
         const embeds = message.embeds.filter((embed) => embed.type === 'image').map((embed) => embed.url);
         return [...new Set([...attachments, ...embeds, ...contentMatches])] as string[];
     }

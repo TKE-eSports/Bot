@@ -3,7 +3,7 @@ import { Listener, ListenerOptions } from '@sapphire/framework';
 import type { GuildMember, Message } from 'discord.js';
 import { AntiProfanity } from '../../../config';
 import { Events } from '../../../lib/constants/events';
-import { perspectiveApi } from '../../../lib/api/perspectiveApi';
+import { perspectiveApi } from '../../../lib/api/antiProfanity';
 
 @ApplyOptions<ListenerOptions>({
 	name: "antiProfanity/messageHandler",
@@ -15,10 +15,9 @@ export class UserEvent extends Listener {
 		else if (this.comparePerms(message.member)) return;
 
 		const response = await perspectiveApi(message.content);
-		const score = response.attributeScores.TOXICITY.summaryScore.value;
-
-		if (score > AntiProfanity.threshHold) {
-			this.container.client.emit(Events.Profanity.ProfanityDetect, message, response);
+		const data = response.data.filter((data) => data.results.some((m) => m.match === true));
+		if (data.length > 0) {
+			this.container.client.emit(Events.Profanity.ProfanityDetect, message, data);
 		}
 	}
 

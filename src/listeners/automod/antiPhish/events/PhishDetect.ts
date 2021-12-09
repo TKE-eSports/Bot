@@ -1,4 +1,5 @@
 import { ApplyOptions } from '@sapphire/decorators';
+import { fetch } from '@sapphire/fetch';
 import { Listener, ListenerOptions } from '@sapphire/framework';
 import { Collection, Message, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
 import { AntiPhish, WebServer } from '../../../../config';
@@ -13,7 +14,6 @@ export class UserEvent extends Listener {
         const embed = new MessageEmbed(AntiPhish.ads)
             .setAuthor(`${message.author.tag} (${message.author.id})`, message.author.displayAvatarURL())
             .addField("Phishing Domain Found", `${response.map((value) => `● ${value}`).join("\n")}`)
-            .setThumbnail(`https://urlscan.io/liveshot/?width=1600&height=1200&url=http://${response[0]}`)
             .setColor("RED");
 
         const transcript = await createAndSaveTranscript(new Collection<string, Message>().set(message.id, message));
@@ -25,7 +25,13 @@ export class UserEvent extends Listener {
                     .setURL(`${WebServer.host}/phish/transcript/${transcript.id}`)
             ]
         );
-        await message.reply({ embeds: [embed], components: [actionRow] });
+        const msg = await message.reply({ embeds: [embed], components: [actionRow] });
         if (message.deletable) message.delete();
+
+        try {
+            await fetch("https://api.tke-esports.tk/api/screenshot/generate?url=" + encodeURIComponent(response[0]));
+            await msg.edit({ embeds: [embed.setImage("https://api.tke-esports.tk/api/screenshot/generate?url=" + encodeURIComponent(response[0]))] });
+        } catch (_) {}
+
     }
 }

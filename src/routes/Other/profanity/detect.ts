@@ -1,6 +1,6 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { ApiRequest, ApiResponse, methods, Route, RouteOptions } from '@sapphire/plugin-api';
-import { perspectiveApi } from '../../../lib/api/perspectiveApi';
+import { perspectiveApi } from '../../../lib/api/antiProfanity';
 
 @ApplyOptions<RouteOptions>({
 	route: 'profanity/detect',

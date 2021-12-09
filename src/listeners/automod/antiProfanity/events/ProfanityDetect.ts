@@ -2,7 +2,7 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { Listener, ListenerOptions } from '@sapphire/framework';
 import { Collection, Message, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
 import { AntiProfanity, DefaultTheme, WebServer } from '../../../../config';
-import type { PerspectiveApiResponse } from '../../../../lib/api/perspectiveApi';
+import type { ApiResponseData } from '../../../../lib/api/antiProfanity';
 import { Events } from '../../../../lib/constants/events';
 import { generateTranscript, saveTranscript } from '../../../../lib/transcript';
 
@@ -10,13 +10,13 @@ import { generateTranscript, saveTranscript } from '../../../../lib/transcript';
 	event: Events.Profanity.ProfanityDetect
 })
 export class UserEvent extends Listener {
-	public async run(message: Message, response: PerspectiveApiResponse) {
+	public async run(message: Message, data: ApiResponseData[]) {
 		const embed = new MessageEmbed(AntiProfanity.ads)
+			.setAuthor(`${message.author.tag} (${message.author.id})`, message.author.displayAvatarURL())
 			.setColor(DefaultTheme)
-			.setDescription(
-				`${message.member?.toString()}'s message has been flagged due to profanity. Score: **${response.attributeScores.TOXICITY.summaryScore.value
-				}**.`
-			);
+			.addField("Profanity Detected", data.map((d) => {
+				return `● ${d.label} : ${Object.values(d.results[0].probabilities).join(", ")}`;
+			}).join("\n"));
 
 		const saveTranscript = await this.createTranscript(message);
 

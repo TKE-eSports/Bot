@@ -3,12 +3,14 @@ node_modules/
 .vs/
 .idea/
 *.iml
+.vscode/
 
 # Environment variables
 .DS_Store
 
 dist/
 package-lock.json
+src/commands/
 
 # Ignore the config file (contains sensitive information such as tokens)
 src/config.ts

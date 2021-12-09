@@ -14,7 +14,7 @@ export class UserEvent extends Listener {
         if (response.isPorn || response.isHentai) {
             const embed = new MessageEmbed(AntiNsfw.ads)
                 .setAuthor(`${message.author.tag} (${message.author.id})`, message.author.displayAvatarURL({ dynamic: true }))
-                .addField(`Nsfw Image(s) Detected`, response.images.map((url) => `● ${url}`).join("\n"));
+                .addField(`Nsfw Image(s) Detected`, response.images.map((url) => `${url}`).join("\n"));
 
             const uniqueId = nanoid(10);
             const actionRow = new MessageActionRow().addComponents(

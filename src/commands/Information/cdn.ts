@@ -2,11 +2,12 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { Command, CommandOptions } from '@sapphire/framework';
 import { Message, MessageAttachment, MessageEmbed } from 'discord.js';
 import { CDN } from '../../config';
-import { getCDNStats , generateChart } from '../../lib/api/cdnStats';
+import { getCDNStats, generateChart } from '../../lib/api/cdnStats';
 
 @ApplyOptions<CommandOptions>({
     description: 'Shows jsDelivr CDN stats.',
-    aliases: ['jsdelivr']
+    aliases: ['jsdelivr'],
+    enabled: false
 })
 export class UserCommand extends Command {
     public async messageRun(message: Message) {
