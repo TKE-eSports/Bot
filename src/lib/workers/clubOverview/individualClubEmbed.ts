@@ -8,6 +8,7 @@ import { formClubLogMessage } from "../clubLogs/modules";
 const CLUB_ICONS = "https://static.tke-esports.tk/Data/brawlstars/clubIcons.json";
 
 export const individualClubEmbed = async () => {
+    console.log("ok")
     const data = await fetch<Data[]>(ClubOverview.individualClubs, FetchResultTypes.JSON);
     const clubIcons = await fetch<ClubIcons[]>(CLUB_ICONS, FetchResultTypes.JSON);
     const unResolvedClubs = data.map(async (club) => {
@@ -59,6 +60,10 @@ export const individualClubEmbed = async () => {
         const webhook = new WebhookClient({ id: data.id, token: data.token });
         webhook.editMessage(data.messageId, { embeds: embeds, content: null }).catch((e) => { console.log(e) });
     });
+}
+
+export const updateIndividualClubEmbed = () => {
+    setInterval(updateIndividualClubEmbed, ClubOverview.updateInterval);
 }
 
 interface Data {
