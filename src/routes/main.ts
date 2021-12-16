@@ -6,10 +6,10 @@ import { ApiRequest, ApiResponse, methods, Route, RouteOptions } from '@sapphire
 })
 export class UserRoute extends Route {
 	public [methods.GET](_request: ApiRequest, response: ApiResponse) {
-		response.json({ message: 'Hello from API server' });
+		response.json({ message: 'Hello from TKE Bot Server' });
 	}
 
 	public [methods.POST](_request: ApiRequest, response: ApiResponse) {
-		response.json({ message: 'Hello from API server' });
+		response.json({ message: 'Hello from TKE Bot Server' });
 	}
 }

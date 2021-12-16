@@ -25,16 +25,21 @@ export const entranceEmoji = (club: any) => {
     else return `NOT_FOUND`
 }
 
+const roleEmojis: any = {
+    "member": "<:Member:792430014326898740>",
+    "senior": "<:Seniors:789425351768014888>",
+    "vicePresident": "<:VicePresidents:789425469375119360>",
+    "president": "<:President:789425708929253396>"
+};
+
 export const list = (club: any, role: string) => {
     const total = club.members.filter((x: any) => x.role == role).length;
     let r = [role];
     if (role === "vicePresident") r = ["president", role]
-    const emoji: any = {
-        "member": "<:Member:792430014326898740>",
-        "senior": "<:Seniors:789425351768014888>",
-        "vicePresident": "<:VicePresidents:789425469375119360>",
-        "president": "<:President:789425708929253396>"
-    };
-    const list = club.members.filter((x: any) => r.includes(x.role)).sort((a: any, b: any) => b.trophies - a.trophies).map((m: any) => `${emoji[m.role] || "<:Not_Found:792392216663556116>"}\`${m.trophies}\` [${m.name}](https://brawlify.com/stats/profile/${m.tag.replace("#", "")})`).slice(0, 5)
+    const list = club.members.filter((x: any) => r.includes(x.role)).sort((a: any, b: any) => b.trophies - a.trophies).map((m: any) => `${roleEmojis[m.role] || "<:Not_Found:792392216663556116>"}\`${m.trophies}\` [${m.name}](https://brawlify.com/stats/profile/${m.tag.replace("#", "")})`).slice(0, 5)
     return [total, list.join("\n") || "None"]
+}
+
+export const getRoleEmoji = (role : string) => {
+    return roleEmojis[role] || "<:Not_Found:792392216663556116>";
 }

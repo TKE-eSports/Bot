@@ -13,7 +13,7 @@ const API_URL = `https://api.popcatdev.repl.co/welcomecard`;
 export class UserEvent extends Listener {
     public async run(member: GuildMember) {
         if (!member.guild.id || member.guild.id !== WelcomeLogging.guildId) return;
-        const channel = member.guild.channels.cache.get(WelcomeLogging.channelId) as TextChannel;
+        const channel = member.guild.channels.cache.get(WelcomeLogging.channelId ?? "") as TextChannel;
         if (!channel) return;
 
         const welcomeImage = await this.generateWelcomeImage(member);

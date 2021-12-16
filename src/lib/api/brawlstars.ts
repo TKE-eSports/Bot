@@ -1,5 +1,6 @@
 import { fetch, FetchResultTypes } from "@sapphire/fetch";
 import type { ChartConfiguration } from "chart.js";
+import type { ClubLog } from "../workers/clubLogs/modules";
 import { chart } from "./chart";
 
 const BRAWL_STARS_API_URL = "https://bsproxy.royaleapi.dev/v1";
@@ -26,6 +27,15 @@ export const getPlayer = async (tag: string) => {
         }
     }, FetchResultTypes.JSON);
     return response;
+}
+
+export const getClubLogs = async (tag: string) => {
+    try {
+        const response = await fetch<ClubLog>(`${BRAWLAPI_API_URL}/clublog/${tag.replace("#", "")}`, FetchResultTypes.JSON)
+        return response;
+    } catch (e) {
+        return null;
+    }
 }
 
 export const generateClubGraph = async (tag: string) => {

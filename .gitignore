@@ -8,9 +8,9 @@ node_modules/
 # Environment variables
 .DS_Store
 
+src/commands/
 dist/
 package-lock.json
-src/commands/
 
 # Ignore the config file (contains sensitive information such as tokens)
 src/config.ts
