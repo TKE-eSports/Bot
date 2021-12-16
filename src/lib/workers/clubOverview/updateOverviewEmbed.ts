@@ -12,8 +12,10 @@ const _load = async () => {
     if (!message) return container.logger.debug("Could not find club overview message");
 
     setInterval(async () => {
-        const payload = await buildOverviewEmbed();
-        await message.edit(payload);
+        try {
+            const payload = await buildOverviewEmbed();
+            await message.edit(payload);
+        } catch (e) { }
     }, ClubOverview.updateInterval);
 
     _collector(channel);
@@ -24,6 +26,7 @@ const _collector = async (channel: TextChannel) => {
     collector.on("collect", async (interaction) => {
         if (!interaction.isSelectMenu()) return;
         const club = await getClub(interaction.values[0]);
+        if (!club) return interaction.reply({ content: "An unexpected error occurred while fetching the club data.", ephemeral: true });
 
         const president = club.members.find(m => m.role === "president");
         const infoEmbed = new MessageEmbed()
@@ -39,13 +42,13 @@ const _collector = async (channel: TextChannel) => {
             .addField(`Top Members (${list(club, "member")[0]})`, list(club, "member")[1], true)
             .addField(`Top Seniors (${list(club, "senior")[0]})`, list(club, "senior")[1], true)
             .addField(`Top Presidents (${list(club, "vicePresident")[0]} + 1)`, list(club, "vicePresident")[1], true)
-    
-            const graphEmbed = new MessageEmbed()
-            .setImage(`${WebServer.host}/brawlstars/graph/club/${club.tag.replace("#" , "")}?timestamps=${Date.now()}`)
-            .setFooter("Graph Data Provided by BrawlAPI" , `${CDN.url}/logos/brawlify.png`)
+
+        const graphEmbed = new MessageEmbed()
+            .setImage(`${WebServer.host}/brawlstars/graph/club/${club.tag.replace("#", "")}?timestamps=${Date.now()}`)
+            .setFooter("Graph Data Provided by BrawlAPI", `${CDN.url}/logos/brawlify.png`)
             .setTimestamp();
-            
-        interaction.reply({ embeds: [infoEmbed , graphEmbed], ephemeral: true });
+
+        interaction.reply({ embeds: [infoEmbed, graphEmbed], ephemeral: true });
     });
 }
 

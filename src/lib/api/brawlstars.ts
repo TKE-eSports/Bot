@@ -12,21 +12,29 @@ export const encodeTag = (tag: string) => {
 }
 
 export const getClub = async (tag: string) => {
-    const response = await fetch<Club>(`${BRAWL_STARS_API_URL}/clubs/${encodeTag(tag)}`, {
-        headers: {
-            "Authorization": `Bearer ${process.env.BRAWL_STARS_API}`
-        }
-    }, FetchResultTypes.JSON);
-    return response;
+    try {
+        const response = await fetch<Club>(`${BRAWL_STARS_API_URL}/clubs/${encodeTag(tag)}`, {
+            headers: {
+                "Authorization": `Bearer ${process.env.BRAWL_STARS_API}`
+            }
+        }, FetchResultTypes.JSON);
+        return response;
+    } catch (e) {
+        return null;
+    }
 }
 
 export const getPlayer = async (tag: string) => {
+    try{
     const response = await fetch(`${BRAWL_STARS_API_URL}/players/${encodeTag(tag)}`, {
         headers: {
             "Authorization": `Bearer ${process.env.BRAWL_STARS_API}`
         }
     }, FetchResultTypes.JSON);
     return response;
+}catch(e){
+    return null;
+}
 }
 
 export const getClubLogs = async (tag: string) => {
@@ -98,7 +106,7 @@ export const generatePlayerGraph = async (tag: string) => {
     return await chart.renderToBuffer(chartConfig, "image/png")
 }
 
-interface Club {
+export interface Club {
     tag: string,
     name: string,
     description: string,

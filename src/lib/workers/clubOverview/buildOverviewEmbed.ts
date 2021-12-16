@@ -1,12 +1,13 @@
 import { fetch, FetchResultTypes } from "@sapphire/fetch";
 import { MessageActionRow, MessageEmbed, MessageOptions, MessageSelectMenu } from "discord.js";
 import { ClubOverview } from "../../../config";
-import { getClub } from "../../api/brawlstars";
-import { entranceEmoji , separate , splitChunk } from "./modules";
+import { getClub, Club } from "../../api/brawlstars";
+import { entranceEmoji, separate, splitChunk } from "./modules";
 
 export const buildOverviewEmbed = async () => {
-    const clubs = await fetch<Clubs[]>(ClubOverview.clubs , FetchResultTypes.JSON);
-    const resolvedClubs = await Promise.all(clubs.map(async (club) => { return await getClub(club.tag) }));
+    const clubs = await fetch<Clubs[]>(ClubOverview.clubs, FetchResultTypes.JSON);
+    const allClubs = await Promise.all(clubs.map(async (club) => { return await getClub(club.tag) }));
+    const resolvedClubs = allClubs.filter(club => club !== null) as Club[];
 
     const totalClubs = resolvedClubs.length;
     const totalTrophies = resolvedClubs.reduce((acc, club) => acc + club.trophies, 0);

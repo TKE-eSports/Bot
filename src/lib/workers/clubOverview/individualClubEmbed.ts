@@ -16,12 +16,14 @@ export const individualClubEmbed = async () => {
             token: club.token,
             messageId: club.messageId,
             clubData: await getClub(club.tag),
-            clubLogs: await getClubLogs(club.tag)
+            enableClubLogs: club.enableClubLogs ?? false,
+            clubLogs: club.enableClubLogs ? await getClubLogs(club.tag) : null
         }
     });
     const clubs = await Promise.all(unResolvedClubs);
 
     clubs.forEach((data) => {
+        if(!data.clubData  || !data.clubLogs)return;
         const embeds: MessageEmbed[] = [];
         const club = data.clubData;
         const president = club.members.find(m => m.role === "president");
@@ -41,7 +43,7 @@ export const individualClubEmbed = async () => {
             .addField(`Top Presidents (${list(club, "vicePresident")[0]} + 1)`, list(club, "vicePresident")[1], true);
         embeds.push(clubInfoEmbed);
 
-        if (data.clubLogs) {
+        if (data.enableClubLogs && data.clubLogs !== null) {
             const logsData = formClubLogMessage(data.clubLogs);
             const clubLogsEmbed = new MessageEmbed()
                 .setAuthor(`${club.name} — Club Logs`, `https://cdn.brawlify.com/club/${club.badgeId}.png?v=1`, `https://brawlify.com/stats/club/${club.tag.replace("#", "")}`)
@@ -69,7 +71,8 @@ interface Data {
     id: string,
     token: string,
     tag: string,
-    messageId: string
+    messageId: string,
+    enableClubLogs?: boolean
 }
 
 interface ClubIcons {
