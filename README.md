@@ -1,4 +1,4 @@
-![TKE Bot Status](https://api.tke-esports.tk/api/website/status?url=https://bot.tke-esports.tk)
+![TKE Bot Status](https://api.tke-esports.tk/api/website/status?url=http://176.31.203.21:3715)
 
 # TKE Bot
 
