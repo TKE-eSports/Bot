@@ -38,7 +38,7 @@
     "dotenv-cra": "^3.0.2",
     "extract-domain": "^2.3.4",
     "ffmpeg-static": "^4.4.0",
-    "googleapis": "^89.0.0",
+    "googleapis": "^94.0.0",
     "libsodium-wrappers": "^0.7.9",
     "moment": "^2.29.1",
     "mysql-database": "^1.2.5",
