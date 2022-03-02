@@ -37,7 +37,7 @@
     "distube": "^3.0.1",
     "dotenv-cra": "^3.0.2",
     "extract-domain": "^2.3.4",
-    "ffmpeg-static": "^4.4.0",
+    "ffmpeg-static": "^5.0.0",
     "googleapis": "^89.0.0",
     "libsodium-wrappers": "^0.7.9",
     "moment": "^2.29.1",
